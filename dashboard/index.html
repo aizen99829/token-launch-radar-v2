@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="scope" aria-hidden="true">
+    <div class="sweep"></div>
+    <span class="blip b1"></span><span class="blip b2"></span><span class="blip b3"></span>
+  </div>
+  <div class="mast-text">
+    <h1>TOKEN LAUNCH RADAR</h1>
+    <p class="tagline">Protocols that record no token yet, ranked by what their token would be worth if the record stayed as it is — and how to farm each one before it launches.</p>
+    <p class="meta" id="meta">Loading the sweep…</p>
+  </div>
+  <div class="stats" id="stats"></div>
+  <p id="valid" class="valid"></p>
+</header>
+
+<section class="controls" aria-label="Board controls">
+  <label class="ctl grow">Search
+    <input id="q" type="search" placeholder="Protocol name or slug…" autocomplete="off">
+  </label>
+  <label class="ctl">Status
+    <select id="f-status">
+      <option value="all" selected>All rows</option>
+      <option value="pre-token">Pre-token only</option>
+      <option value="launched">Launched only</option>
+    </select>
+  </label>
+  <label class="ctl">Chain
+    <select id="f-chain"><option value="">All chains</option></select>
+  </label>
+  <label class="ctl">Category
+    <select id="f-cat"><option value="">All categories</option></select>
+  </label>
+  <label class="ctl">TVL band
+    <select id="f-tvl">
+      <option value="">Any TVL</option>
+      <option value="1000000000">$1B and up</option>
+      <option value="250000000">$250M and up</option>
+      <option value="50000000">$50M and up</option>
+      <option value="10000000">$10M and up</option>
+    </select>
+  </label>
+  <label class="ctl">Sort by
+    <select id="f-sort">
+      <option value="rank">Implied value (rank)</option>
+      <option value="tvl">TVL</option>
+      <option value="growth">7d growth</option>
+      <option value="age">Years tokenless</option>
+    </select>
+  </label>
+  <p class="count" id="count"></p>
+</section>
+<p class="hint">Click any row for the model's working on that protocol and its farm plan.</p>
+
+<main>
+  <table class="board" id="board">
+    <thead>
+      <tr>
+        <th class="num">#</th><th>Protocol</th><th>Category</th><th>Chains</th>
+        <th class="num">TVL</th><th class="num">7d</th><th class="num">Tokenless</th>
+        <th class="num">Implied value</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="empty" id="empty" hidden>No contacts on this bearing — loosen a filter.</p>
+</main>
+
+<footer class="colophon">
+  <h2>How the radar prices a launch</h2>
+  <p>Implied value = TVL × category multiple × momentum × maturity. The multiple is calibrated from this
+  snapshot itself: the median market-cap/TVL of the protocols in the same category whose token already
+  trades. Momentum rewards seven-day TVL growth in a capped band; maturity credits the years a protocol
+  has run with no token. Launched protocols ride the board as anchors at their real market cap, tagged
+  LAUNCHED, so the scale is honest. An implied value is this board's own claim about a launch that may
+  never happen — it is not a prediction that a token will be issued.</p>
+  <p class="fine" id="fine"></p>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="detail" id="detail" hidden aria-label="Protocol detail"></aside>
+
+<script src="../data.js"></script>
+<script src="radar.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+/* Token Launch Radar — a dark scope aesthetic: phosphor green on near-black,
+   amber for what has already launched, mono type throughout, hairline grids
+   like the rings of a radar screen. No webfonts, no images, no network. */
+
+:root {
+  --bg: #04120b;
+  --panel: #071c10;
+  --panel-2: #0a2415;
+  --line: #14532d;
+  --line-soft: #0e3a20;
+  --ink: #d9fbe7;
+  --dim: #8fceac;
+  --faint: #5da87f;
+  --green: #37ff9a;
+  --green-deep: #17b96b;
+  --amber: #ffb454;
+  --red: #ff7a6b;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(23, 185, 107, 0.14), transparent 60%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ---- masthead with the scope ---- */
+.masthead {
+  display: flex; flex-wrap: wrap; gap: 22px; align-items: center;
+  padding: 26px 32px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.scope {
+  position: relative; flex: 0 0 auto;
+  width: 104px; height: 104px; border-radius: 50%;
+  border: 1px solid var(--green-deep);
+  background:
+    radial-gradient(circle, transparent 31%, rgba(55, 255, 154, 0.13) 32%, transparent 33%),
+    radial-gradient(circle, transparent 64%, rgba(55, 255, 154, 0.13) 65%, transparent 66%),
+    linear-gradient(rgba(55, 255, 154, 0.10) 1px, transparent 1px) 0 0 / 100% 26px,
+    linear-gradient(90deg, rgba(55, 255, 154, 0.10) 1px, transparent 1px) 0 0 / 26px 100%,
+    #06230f;
+  overflow: hidden;
+}
+.sweep {
+  position: absolute; inset: 0; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(55, 255, 154, 0.55), rgba(55, 255, 154, 0.06) 70deg, transparent 90deg);
+  animation: sweep 5s linear infinite;
+}
+@keyframes sweep { to { transform: rotate(360deg); } }
+.blip {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); box-shadow: 0 0 8px var(--green);
+}
+.b1 { top: 26px; left: 62px; } .b2 { top: 64px; left: 30px; background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+.b3 { top: 48px; left: 74px; width: 4px; height: 4px; }
+
+.mast-text h1 {
+  margin: 0; font-size: 30px; letter-spacing: 0.14em; font-weight: 700; color: var(--green);
+  text-shadow: 0 0 18px rgba(55, 255, 154, 0.35);
+}
+.tagline { margin: 6px 0 4px; max-width: 760px; color: var(--ink); }
+.meta { margin: 0; color: var(--faint); font-size: 12px; letter-spacing: 0.04em; }
+.stats { margin-left: auto; display: flex; gap: 10px; }
+.stat {
+  min-width: 104px; padding: 10px 12px; text-align: right;
+  background: var(--panel); border: 1px solid var(--line-soft); border-radius: 6px;
+}
+.stat b { display: block; font-size: 20px; color: var(--green); }
+.stat span { font-size: 10px; letter-spacing: 0.12em; color: var(--dim); text-transform: uppercase; }
+
+/* ---- controls ---- */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: end;
+  padding: 14px 32px; border-bottom: 1px solid var(--line-soft);
+  background: rgba(7, 28, 16, 0.6);
+}
+.ctl { display: flex; flex-direction: column; gap: 4px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+.ctl.grow { flex: 1 1 220px; }
+.ctl input, .ctl select {
+  font: inherit; font-size: 13px; text-transform: none; letter-spacing: 0;
+  color: var(--ink); background: var(--panel-2);
+  border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px;
+}
+.ctl input:focus, .ctl select:focus { outline: 1px solid var(--green); }
+.count { margin: 0 0 4px auto; color: var(--faint); font-size: 12px; }
+
+/* ---- the board ---- */
+main { padding: 6px 32px 10px; }
+.board { width: 100%; border-collapse: collapse; }
+.board th {
+  text-align: left; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--faint); padding: 10px 10px 8px; border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; background: var(--bg);
+}
+.board td { padding: 8px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+.board tbody tr { cursor: pointer; }
+.board tbody tr:hover { background: rgba(55, 255, 154, 0.06); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.rank { color: var(--faint); }
+tr.top .rank { color: var(--green); font-weight: 700; }
+.pname { font-weight: 700; color: var(--ink); }
+.pslug { color: var(--faint); font-size: 11px; }
+.pill {
+  display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 3px;
+  font-size: 9px; letter-spacing: 0.12em; vertical-align: 2px;
+}
+.pill.pre { color: #04120b; background: var(--green); font-weight: 700; }
+.pill.live { color: #1a0e00; background: var(--amber); font-weight: 700; }
+.pill.watch { color: var(--green); border: 1px solid var(--green-deep); }
+.cat { color: var(--dim); }
+.chains { color: var(--faint); font-size: 12px; }
+.up { color: var(--green); } .down { color: var(--red); } .flat { color: var(--faint); }
+.value { color: var(--green); font-weight: 700; font-size: 15px; }
+tr.launched .value { color: var(--amber); }
+.empty { color: var(--faint); padding: 26px 4px; }
+
+/* ---- colophon ---- */
+.colophon { padding: 18px 32px 30px; border-top: 1px solid var(--line); color: var(--dim); }
+.colophon h2 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin: 0 0 8px; }
+.colophon p { max-width: 980px; margin: 0 0 8px; }
+.colophon .fine { color: var(--faint); font-size: 12px; }
+
+/* ---- detail panel ---- */
+.scrim { position: fixed; inset: 0; background: rgba(2, 8, 4, 0.72); }
+.detail {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 94vw);
+  background: var(--panel); border-left: 1px solid var(--green-deep);
+  padding: 22px 24px; overflow-y: auto; z-index: 5;
+  box-shadow: -18px 0 44px rgba(0, 0, 0, 0.55);
+}
+.detail h2 { margin: 0 26px 2px 0; font-size: 22px; color: var(--ink); }
+.detail .sub { color: var(--faint); margin: 0 0 14px; }
+.detail .close {
+  position: absolute; top: 14px; right: 14px; font: inherit; cursor: pointer;
+  background: var(--panel-2); color: var(--green); border: 1px solid var(--line);
+  border-radius: 4px; padding: 4px 10px;
+}
+.dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.dcell { background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: 6px; padding: 9px 11px; }
+.dcell span { display: block; font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); }
+.dcell b { font-size: 16px; color: var(--ink); }
+.detail h3 { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin: 18px 0 8px; }
+.factor { display: flex; align-items: center; gap: 10px; margin: 5px 0; font-size: 12px; }
+.factor .flabel { flex: 0 0 168px; color: var(--dim); }
+.factor .fbar { flex: 1; height: 8px; background: #0d2f1a; border-radius: 4px; overflow: hidden; }
+.factor .fbar i { display: block; height: 100%; background: var(--green); }
+.factor .fval { flex: 0 0 64px; text-align: right; color: var(--ink); }
+.steps { margin: 0; padding-left: 20px; }
+.steps li { margin: 0 0 10px; color: var(--ink); }
+.steps li::marker { color: var(--green); font-weight: 700; }
+.detail p { color: var(--dim); }
+.detail p b { color: var(--green); }
+.hint { margin: 0; padding: 8px 32px 0; color: var(--faint); font-size: 12px; }
+
+@media (max-width: 900px) {
+  .masthead { flex-wrap: wrap; padding: 18px 16px 12px; }
+  .mast-text h1 { font-size: 22px; }
+  .stats { margin-left: 0; flex-wrap: wrap; }
+  .controls, main, .colophon { padding-left: 16px; padding-right: 16px; }
+  .board th:nth-child(4), .board td:nth-child(4),
+  .board th:nth-child(7), .board td:nth-child(7) { display: none; }
+  .dgrid { grid-template-columns: 1fr; }
+}
+
+.conf {
+  display: inline-block; margin-left: 5px; padding: 1px 4px; border-radius: 3px;
+  font-size: 10px; vertical-align: 1px;
+}
+.conf.cA { color: var(--bg); background: var(--green); }
+.conf.cB { color: #1a0e00; background: var(--amber); }
+.conf.cC { color: var(--dim); border: 1px solid var(--line); }
+.valid { flex-basis: 100%; margin: 0; color: var(--faint); font-size: 12px; }
